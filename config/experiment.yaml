@@ -1,0 +1,20 @@
+seed: 42
+phase1:
+  num_datacenters: 3
+  hosts_per_datacenter: 4
+  num_vms: 12
+  num_tasks: 50
+  algorithms: [ga, pso, psoga]
+  population_size: 24
+  iterations: 20
+  crossover_rate: 0.9
+  mutation_rate: 0.06
+phase2:
+  dataset: synthetic
+  window: 5
+  epochs: 6
+  batch_size: 16
+  optimizer_population: 6
+  optimizer_iterations: 3
+  train_points: 160
+  test_points: 60

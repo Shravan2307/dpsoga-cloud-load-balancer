@@ -1,0 +1,41 @@
+{
+  "family": "dpsoga",
+  "requiresCompatibilities": ["FARGATE"],
+  "networkMode": "awsvpc",
+  "cpu": "512",
+  "memory": "1024",
+  "executionRoleArn": "arn:aws:iam::REPLACE_ACCOUNT:role/REPLACE_ECS_EXECUTION_ROLE",
+  "taskRoleArn": "arn:aws:iam::REPLACE_ACCOUNT:role/REPLACE_ECS_TASK_ROLE",
+  "containerDefinitions": [
+    {
+      "name": "backend",
+      "image": "REPLACE_ACCOUNT.dkr.ecr.REPLACE_REGION.amazonaws.com/dpsoga:latest",
+      "essential": true,
+      "portMappings": [{"containerPort": 8000, "protocol": "tcp"}],
+      "environment": [
+        {"name": "EXECUTION_MODE", "value": "aws"},
+        {"name": "AWS_DRY_RUN", "value": "true"},
+        {"name": "AWS_REGION", "value": "REPLACE_REGION"},
+        {"name": "AWS_S3_BUCKET", "value": "REPLACE_BUCKET"},
+        {"name": "AWS_ECS_CLUSTER", "value": "REPLACE_CLUSTER"},
+        {"name": "AWS_ECS_SERVICE", "value": "REPLACE_SERVICE"},
+        {"name": "CLOUDWATCH_NAMESPACE", "value": "DPSOGA/Application"}
+      ],
+      "healthCheck": {
+        "command": ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:8000/health')\""],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3,
+        "startPeriod": 30
+      },
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/dpsoga",
+          "awslogs-region": "REPLACE_REGION",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}

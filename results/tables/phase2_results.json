@@ -1,0 +1,30 @@
+{
+  "dataset_label": "DEMO/SYNTHETIC DATASET",
+  "baseline_cnn_lstm_mae": 0.18173593953721234,
+  "optimized_cnn_lstm_mae": 0.07543330296289176,
+  "optimized_parameters": {
+    "filters": 16,
+    "kernel_size": 2,
+    "pool_size": 2,
+    "hidden_units": 32,
+    "layers": 1,
+    "dropout": 0.1,
+    "learning_rate": 0.01,
+    "epochs": 2,
+    "batch_size": 16
+  },
+  "optimizer_validation_mae": 0.23245212001165685,
+  "training_loss": [
+    0.3526369460423787,
+    0.2506468079487483,
+    0.2275299596786499,
+    0.21842570106188455,
+    0.20641928851604463,
+    0.18749290704727173
+  ],
+  "optimizer_history": [
+    0.24622546511513227,
+    0.23245212001165685,
+    0.23245212001165685
+  ]
+}

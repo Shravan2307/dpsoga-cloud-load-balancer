@@ -1,0 +1,12 @@
+host:
+  cpu_mips: 10000
+  ram: 16384
+  storage: 100000
+  bandwidth: 10000
+  idle_power: 100
+  max_power: 250
+vm:
+  mips: 1000
+  ram: 1024
+  storage: 10000
+  bandwidth: 1000

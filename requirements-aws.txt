@@ -1,0 +1,2 @@
+# Install this file only when AWS execution, S3, ECS, or CloudWatch mode is required.
+boto3>=1.34

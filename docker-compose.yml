@@ -1,0 +1,35 @@
+services:
+  backend:
+    build:
+      context: .
+      args:
+        INSTALL_AWS: ${INSTALL_AWS:-0}
+    env_file:
+      - .env
+    environment:
+      API_HOST: 0.0.0.0
+      API_PORT: 8000
+      RESULTS_PATH: /app/results
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  dashboard:
+    build:
+      context: .
+      args:
+        INSTALL_AWS: ${INSTALL_AWS:-0}
+    env_file:
+      - .env
+    environment:
+      DASHBOARD_API_URL: http://backend:8000
+    command: ["streamlit", "run", "dashboard/app.py", "--server.address=0.0.0.0", "--server.port=8501"]
+    ports:
+      - "8501:8501"
+    depends_on:
+      backend:
+        condition: service_healthy

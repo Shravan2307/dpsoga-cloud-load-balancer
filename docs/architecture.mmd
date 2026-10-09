@@ -1,0 +1,19 @@
+flowchart TD
+  W[CSV or company workload profile] --> S3[S3 optional workload storage]
+  W --> A[Workload Analyzer]
+  S3 --> A
+  A --> P[CNN-LSTM prediction]
+  P --> G[GA]
+  P --> O[PSO]
+  P --> H[PSO-GA]
+  G --> C[Optimization comparison]
+  O --> C
+  H --> C
+  C --> D[Resource Decision Engine]
+  D --> SIM[Simulation Adapter]
+  D --> AWS[AWS ECS Adapter]
+  SIM --> R[Cloud resources / VM simulator]
+  AWS --> R2[AWS ECS/Fargate]
+  R2 --> CW[CloudWatch]
+  CW --> F[Feedback metrics]
+  F --> A
