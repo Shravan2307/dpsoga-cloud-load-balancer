@@ -532,14 +532,30 @@ def render_google_trace_lab():
                     })
                     st.line_chart(chart_data)
 
+import socket
+import subprocess
+import sys
+import time
+
+def auto_start_backend():
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        if s.connect_ex(('127.0.0.1', 8000)) != 0:
+            try:
+                subprocess.Popen([sys.executable, "-m", "uvicorn", "app.main:app", "--host", "127.0.0.1", "--port", "8000"])
+                time.sleep(3) # Wait for startup
+            except Exception:
+                pass
+
 # --- MAIN APP ROUTING ---
 def main():
     inject_custom_css()
+    auto_start_backend()
+    
     is_online, status_text = check_health()
     render_header(is_online, status_text)
     
     if not is_online:
-        st.error(f"Backend unavailable at {API_URL}. Please start the FastAPI backend.")
+        st.error(f"Backend unavailable at {API_URL}. We tried auto-starting it, but it failed. Please start the FastAPI backend manually.")
         if st.button("RECONNECT"):
             st.rerun()
         st.stop()
